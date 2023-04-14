@@ -5,27 +5,26 @@ import {authService} from "fbase";
 function App() {
   //console.log(firebase);
   const [init, setInit] = useState(false);
-  const [isLogin, setLogin] = useState(authService.currentUser);
-  
+  //const [isLogin, setLogin] = useState(authService.currentUser);
+  const [userObj, setUserObj] = useState(null);
+
   useEffect(()=>{
     authService.onAuthStateChanged((user)=>{
-      console.log(user);
       if(user){
-        setLogin(true);
-      }else{
-        setLogin(false);
+        setUserObj(user)
       }
       setInit(true);
     });
   },[]);
 
-  // setInterval(()=>{
-  //   console.log(authService.currentUser)
-  // },2000)
   return (
     <>
-      {init ? <AppRouter isLogin={isLogin}/> : 'Initializing...'}
-      
+      {init 
+      ? 
+        (<AppRouter isLogin={userObj} userObj={userObj}/>) 
+      : 
+        ('Initializing...')
+      }
       <footer> &copy; Pwiter {new Date().getFullYear() }</footer>
     </>
   );

@@ -1,6 +1,6 @@
 import { authService } from "fbase";
 
-const Profile = () => {
+const Profile = ({userObj}) => {
 
     const onClickLogout = () => {
         authService.signOut();
