@@ -4,29 +4,36 @@ import Home from "routes/Home";
 import Navigation from "component/Navigation";
 import Profile from "routes/Profile";
 
-const AppRouter = ({isLogin, userObj}) => {
+const AppRouter = ({refreshUser, isLogin, userObj}) => {
     return(
         <Router>
-            {isLogin && <Navigation />}
+            {isLogin && (<Navigation userObj={userObj}/>)}
             <Switch>
-                <>
-                    {isLogin? 
-                        <>
-                            <Route exact path = "/">
-                                <Home userObj={userObj}/>
-                            </Route>
-                            <Route exact path = "/Profile">
-                                <Profile userObj={userObj}/>
-                            </Route>
-                        </>
-                    :
-                        <>
-                            <Route>
-                                <Auth exact path = "/"/>
-                            </Route>
-                        </>
-                    }
-                </>
+                {isLogin? (
+                    <div
+                        style={{
+                        maxWidth: 890,
+                        width: "100%",
+                        margin: "0 auto",
+                        marginTop: 80,
+                        display: "flex",
+                        justifyContent: "center",
+                        }}
+                    >
+                        <Route exact path = "/">
+                            <Home userObj={userObj}/>
+                        </Route>
+                        <Route exact path = "/Profile">
+                            <Profile refreshUser={refreshUser} userObj={userObj}/>
+                        </Route>
+                    </div>
+                ) : (
+                    <>
+                        <Route>
+                            <Auth exact path = "/"/>
+                        </Route>
+                    </>
+                )}
             </Switch>
         </Router>
     )
